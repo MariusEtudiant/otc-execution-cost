@@ -11,21 +11,21 @@ live from 12 October 2026, plus six months of 1-minute candles from Binance and 
 
 ## Findings
 
-1. **Routing halves the cost.** Sweeping a 5 M$ clip costs 1.7 bps on the combined books
-   against 3.5 bps on the best single venue for BTC (4.6 against 9.0 bps for ETH). On a BTC
-   clip that is about 900 $ saved. The combined fill takes about 44% from Binance, 38% from
-   Kraken and 17% from Coinbase.
+1. **Routing halves the cost.** Sweeping a 5 M$ clip costs 1.75 bps on the combined books
+   against 3.5 bps on the best single venue for BTC (4.8 against 9.8 bps for ETH). On a BTC
+   clip that is about 900 $ saved. The combined fill takes about 46% from Binance, 37% from
+   Kraken and 15% from Coinbase.
 2. **New York open is the only real liquidity peak.** On weekdays, BTC trades 2.2 M$ per
    minute between 13:00 and 16:00 UTC, against 0.9 M$ in London morning and 0.85 M$ in Asian
    hours: London morning is barely more liquid than Asia. Volume bottoms out at 21:00 UTC and
    weekends trade about 45% less than weekdays.
 3. **Each venue follows its home time zone.** Coinbase's share of volume falls from 48% at
-   19:00 UTC to 16% at 07:00 UTC, and its displayed depth with it: a 5 M$ ETH sweep on
-   Coinbase cost 35 bps in London morning against 22 bps in the New York afternoon, while
-   Binance stayed flat (10 against 9 bps). Outside US hours the combined book leans on
-   Binance and Kraken.
+   19:00 UTC to 16% at 07:00 UTC, and its displayed depth with it: a 5 M$ sweep on Coinbase
+   cost 11.0 bps in London morning against 7.5 bps in the New York afternoon for BTC (32
+   against 22 bps for ETH), while Binance barely moved (3.5 against 3.6 bps for BTC). Outside
+   US hours the combined book leans on Binance and Kraken.
 4. **Up to 10 M$, speed beats patience.** Working a 5 M$ BTC clip at 10% of volume takes
-   20 to 75 minutes and leaves 24 to 36 bps of open risk (95%), against 1.7 bps to sweep the
+   20 to 75 minutes and leaves 24 to 36 bps of open risk (95%), against 1.75 bps to sweep the
    combined books at once. The hour changes the risk of waiting far more than the cost of
    sweeping.
 
@@ -40,9 +40,9 @@ live from 12 October 2026, plus six months of 1-minute candles from Binance and 
 | Asset | Session | Minutes | 3 venues combined | Best single venue |
 |---|---|---:|---:|---:|
 | BTC | New York afternoon (12 Oct, 17:23–20:06 UTC) | 164 | 1.69 | 3.54 |
-| BTC | London morning (13 Oct, from 07:12 UTC) | 32 | 1.93 | 3.47 |
+| BTC | London morning (13 Oct, 07:12–09:28 UTC) | 137 | 1.87 | 3.48 |
 | ETH | New York afternoon (12 Oct, 17:23–20:06 UTC) | 164 | 4.52 | 8.98 |
-| ETH | London morning (13 Oct, from 07:12 UTC) | 32 | 5.00 | 9.94 |
+| ETH | London morning (13 Oct, 07:12–09:28 UTC) | 137 | 5.00 | 10.21 |
 
 The full table is in [`reports/sessions_measured.csv`](reports/sessions_measured.csv).
 
@@ -59,8 +59,8 @@ values pasted in:
 - **Cost of waiting:** risk of working the clip, for every hour, weekday and weekend.
 
 Example: a client buys 5 M$ of BTC at 09:00 UTC on a weekday, with a 2 bps margin. The pricer
-quotes 3.7 bps above mid and recommends sweeping the combined books. Hedging on a single venue
-would cost about 900 $ more.
+uses the London morning curve, quotes 3.9 bps above mid and recommends sweeping the combined
+books. Hedging on a single venue would cost about 800 $ more.
 
 ## Method
 
