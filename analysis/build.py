@@ -51,7 +51,8 @@ plt.rcParams.update({
 
 # --------------------------------------------------------------------------- snapshots
 def load_snapshots():
-    m = pd.read_csv(os.path.join(DATA, "metrics.csv"), parse_dates=["ts_utc"])
+    path = os.environ.get("OTC_METRICS", os.path.join(DATA, "metrics.csv"))  # override to rebuild a past state
+    m = pd.read_csv(path, parse_dates=["ts_utc"])
     for s in SIZES:  # cost of a clip = average of the buy and sell sweeps
         m[f"cost_{s}m"] = m[[f"buy_{s}m_bps", f"sell_{s}m_bps"]].mean(axis=1, skipna=False)
     m["window"] = m["ts_utc"].map(window_of)
@@ -166,7 +167,7 @@ def fig_hedge(clocks, curve):
         ax.text(24.2, y[-1], f"{asset} patient hedge", va="center", fontsize=9, color=INK)
         sweep = curve.loc[(asset, "ALL3"), float(CLIP_MUSD)]
         ax.axhline(sweep, color=C[asset], lw=1.2, ls=(0, (4, 3)))
-        ax.text(24.2, sweep, f"{asset} sweep now ({sweep:.1f})", va="center", fontsize=9, color=INK2)
+        ax.text(24.2, sweep, f"{asset} sweep now ({sweep:.2f})", va="center", fontsize=9, color=INK2)
     ax.set_xlim(0, 24)
     ax.set_ylim(0, None)
     ax.set_xticks(range(0, 25, 3))
